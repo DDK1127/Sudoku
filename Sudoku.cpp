@@ -23,6 +23,7 @@ public:
 
 bool sudoku::input(){
     int n;
+    cout << "Please Enter 0 in the Blank Box." << endl << endl;
     for (int i = 0; i < 9; i++){
         for (int j = 0; j < 9; j++){
             cin >> n;
@@ -44,6 +45,7 @@ bool sudoku::check_input(){
         for (int j = 0; j < 9; j++){
             if (arr[i][j] != 0){
                 if (row_list[arr[i][j]]){
+                    cout << "You enter the WRONG format." << endl;
                     cout << "Error Location: " << i + 1 << ", " << j + 1 << endl;
                     return false;
                 }
@@ -52,6 +54,7 @@ bool sudoku::check_input(){
             }
             if (arr[j][i] != 0){
                 if (col_list[arr[j][i]]){
+                    cout << "You enter the WRONG format." << endl;
                     cout << "Error Location: [" << i + 1 << ", " << j + 1 << "]" << endl;
                     return false;
                 }
@@ -142,21 +145,22 @@ void sudoku::DFS(int row, int col){
 };
 
 int main(){
-    // vector<vector<int> > input_1 {  // Easy.
-    //     {2, 4, 0, 0, 0, 0, 1, 0, 7},
-    //     {6, 0, 8, 9, 1, 5, 3, 0, 2},
-    //     {9, 0, 0, 0, 2, 7, 0, 6, 0},
-    //     {0, 9, 7, 1, 3, 2, 6, 0, 5},
-    //     {0, 0, 0, 5, 0, 8, 0, 3, 4},
-    //     {5, 0, 0, 0, 0, 0, 0, 0, 0},
-    //     {7, 0, 2, 3, 0, 9, 8, 0, 1},
-    //     {0, 0, 0, 8, 0, 0, 0, 0, 0},
-    //     {0, 1, 9, 0, 0, 0, 4, 7, 0}
-    // };
-    // sudoku S(input_1);
-    // cout << " Original Matrix =>" << endl;
-    // S.matrix_output();
-    // S.DFS(0, 2);
+    vector<vector<int> > input_1 {  // Easy.
+        {2, 4, 0, 0, 0, 0, 1, 0, 7},
+        {6, 0, 8, 9, 1, 5, 3, 0, 2},
+        {9, 0, 0, 0, 2, 7, 0, 6, 0},
+        {0, 9, 7, 1, 3, 2, 6, 0, 5},
+        {0, 0, 0, 5, 0, 8, 0, 3, 4},
+        {5, 0, 0, 0, 0, 0, 0, 0, 0},
+        {7, 0, 2, 3, 0, 9, 8, 0, 1},
+        {0, 0, 0, 8, 0, 0, 0, 0, 0},
+        {0, 1, 9, 0, 0, 0, 4, 7, 0}
+    };
+    sudoku S1(input_1);
+    cout << " Easy Difficulty Matrix =>" << endl;
+    S1.matrix_output();
+    pair<int, int> start = S1.next_location(0, 0);
+    S1.DFS(start.first, start.second);
 
     vector<vector<int> > input_2 {  // Hard.
         {7, 0, 0, 1, 0, 0, 0, 0, 9},
@@ -170,10 +174,19 @@ int main(){
         {0, 1, 0, 0, 0, 6, 8, 0, 0}
     };
     sudoku S2(input_2);
-    cout << " Original Matrix =>" << endl;
+    cout << " Medium Difficulty Matrix =>" << endl;
     S2.matrix_output();
-    S2.DFS(0, 1);
+    start = S2.next_location(0, 0);
+    S2.DFS(start.first, start.second);
+    
 
+    // __________your input__________
+    sudoku S;
+    while(S.input()){
+        pair<int, int> start = S2.next_location(0, 0);
+        S2.DFS(start.first, start.second);
+        cout << endl;
+    }
     return 0;
 }
 
